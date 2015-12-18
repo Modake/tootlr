@@ -8,7 +8,7 @@ class StaticPagesControllerTest < ActionController::TestCase
 	test "should get contact" do
     get :contact
     assert_response :success
-    assert_select "title", "Contact | #{@base_title}"
+		assert_select "title", "Contact | #{@base_title}"
   end
 	
 	test "should get home" do
