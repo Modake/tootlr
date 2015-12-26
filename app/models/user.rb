@@ -31,7 +31,15 @@ class User < ActiveRecord::Base
 	def authenticated?(remember_token)
 		BCrypt::Password.new(remember_digest).is_password?(remember_token)
 	end
-#	def forget
-#    update_attribute(:remember_digest, nil)
-#  end
+	
+	# Forgets a user.
+	def forget
+    update_attribute(:remember_digest, nil)
+  end
+	
+	# Returns true if the given token matches the digest.
+	def authenticated?(remember_token)
+		return false if remember_digest.nil?
+		BCrypt::Password.new(remember_digest).is_password?(remember_token)
+	end
 end
