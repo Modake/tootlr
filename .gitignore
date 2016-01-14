@@ -19,6 +19,9 @@
 # Ignore Spring files.
 /spring/*.pid
 
+# Ignore uploaded test images.
+/public/uploads
+
 /.DS_Store
 */.DS_Store
 **/.DS_Store
