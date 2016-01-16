@@ -81,7 +81,8 @@ class User < ActiveRecord::Base
 
   # Defines a proto-feed
   def feed
-    Micropost.where("user_id = ?", id)
+    Micropost.where("user_id IN (:following_ids) OR user_id = :user_id",
+                    following_ids: following_ids, user_id: id)
   end
 
   # Follows a user.
@@ -97,6 +98,13 @@ class User < ActiveRecord::Base
   # Returns true if the current user is following the other user.
   def following?(other_user)
     following.include?(other_user)
+  end
+
+  # Returns a user's sttus feed.
+  def feed
+    following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
+    Micropost.where("user_id IN (#{following_ids})
+                     OR user_id = :user_id", user_id: id)
   end
 
   private
